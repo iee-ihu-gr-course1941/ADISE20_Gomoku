@@ -1,1 +1,1 @@
-# ADOPSE20_Gomoku
+# ADISE20_Gomoku
