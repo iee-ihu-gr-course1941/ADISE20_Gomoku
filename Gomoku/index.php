@@ -8,16 +8,16 @@
 <title>Gomoku</title>
 
     <!-- Latest compiled and minified CSS -->
-    <link rel="stylesheet" href="bootstrap.min.css"/>
+    <link rel="stylesheet" href="bootstrap/bootstrap.min.css"/>
 
     <!-- jQuery library -->
-    <script src="jquery.min.js"></script>
+    <script src="bootstrap/jquery.min.js"></script>
 
     <!-- Popper JS -->
-    <script src="popper.min.js"></script>
+    <script src="bootstrap/popper.min.js"></script>
 
     <!-- Latest compiled JavaScript -->
-    <script src="bootstrap.min.js"></script>
+    <script src="bootstrap/bootstrap.min.js"></script>
     
     <script src="js/gomoku.js"></script>
     <link rel="stylesheet" href="css/gomoku.css"/>
@@ -41,18 +41,15 @@
                          <option value='B'>B</option>
                          <option value='W'>W</option>
                      </select>
-                 <button id='login' class='btn btn-outline-danger'>ΕΙΣΟΔΟΣ</button><br>
+                 <button id='login' class='btn btn-outline-danger'>ΕΙΣΟΔΟΣ</button><br></br>
                 </div>
                 <div id='game_info'>
 			    </div>
             </div>
-              <button id='chess_reset' class='btn btn-primary'>ΕΝΑΡΞΗ/RESET</button><br></br>
-
-         </div>
+             <button id='gomoku_reset' class='btn btn-primary'>ΕΝΑΡΞΗ/RESET</button>
 
     </div>
-    <div id='move_div'>
-    </div>
+
 
   
 </body>

@@ -7,21 +7,20 @@ $(function () {
 	draw_empty_board();
 	fill_board();
 	
+
 	$('#login').click( login_to_game);
 	$('#reset').click( reset_board);
 	$('#do_move').click( do_move);
-	$('#move_div').hide();
-	game_status_update();
-	$('#the_move_src').change( update_moves_selector);
-	$('#do_move2').click( do_move2);
+	
+	update_game_status();
 });
 
 
-function draw_the_board() {
+function draw_empty_board() {
     var board = '<table id="gomoku_board">'
-    for (var i = 1; i <= 16; i++) {
+    for (var i = 1; i < 16; i++) {
         board += '<tr>';
-        for (var j = 1; j <= 16; j++) {
+        for (var j = 1; j < 16; j++) {
             board += '<td class="board_square" id="square_' + i + '_' + j + '">' + i + ',' + j + '</td>';
         }
         board += '</tr>';
@@ -39,7 +38,7 @@ function fill_board() {
 }
 
 function reset_board() {
-	$.ajax({url: "chess.php/board/", 
+	$.ajax({url: "gomoku.php/board/", 
 	headers: {"X-Token": me.token}, 
 	method: 'POST',  
 	success: fill_board_by_data });
@@ -57,7 +56,7 @@ function fill_board_by_data(data) {
 	}
 	
 function login_to_game() {
-    if ($('#nickname_input').val() == '') {
+    if ($('#username').val() == '') {
         alert('You have to set a username!');
         return;
   }
@@ -84,13 +83,13 @@ function login_error(data,y,z,c) {
 	alert(x.errormesg);
 }
 
-function game_status_update() {
+function update_game_status() {
 	
 	clearTimeout(timer);
 	$.ajax({url: "gomoku.php/status/", success: update_status,headers: {"X-Token": me.token} });
 }
 
-function update_status(data) {
+function update_game_status(data) {
 	last_update=new Date().getTime();
 	var old_stats = game_status;
 	game_status=data[0];
@@ -101,17 +100,17 @@ function update_status(data) {
 
 	if (game_status.status == 'aborted') {
         $('#gamepad').hide(2000);
-		timer=setTimeout(function() { game_status_update();}, 4000);
+		timer=setTimeout(function() { update_game_status();}, 4000);
 	} else if (game_status.status == 'ended') {
         $('#gamepad').hide(2000);
-        timer = setTimeout(function() { game_status_update(); }, 2000);
+        timer = setTimeout(function() { update_game_status(); }, 2000);
 	} else {
         if (game_status.p_turn == me.piece_color && me.piece_color != null) {
             $('#gamepad').show(2000);
-            timer = setTimeout(function() { game_status_update(); }, 10000);
+            timer = setTimeout(function() { update_game_status(); }, 10000);
         } else {
             $('#gamepad').hide(2000);
-            timer = setTimeout(function() { game_status_update(); }, 4000);
+            timer = setTimeout(function() { update_game_status(); }, 4000);
         }
     }	
 		
@@ -119,7 +118,7 @@ function update_status(data) {
  	
 }
 
-function update_info(){
+function update_player_info(){
 	$('#game_info').html("Color: "+me.piece_color+"<br> Username: "+me.username +'<br>Token='+me.token+'<br>Game state: '+game_status.status+', '+ game_status.p_turn+' must play now.');
 	
 	
@@ -128,7 +127,7 @@ function update_info(){
 
 function do_move() {
 
-    var $move = $('#cmove').val();
+    var $move = $('#move').val();
 
     if ($move < 1 || $move > 15) {
         alert('Δώσε έγκυρη στήλη');
@@ -149,12 +148,12 @@ function do_move() {
 }
 
 function result_move(data) {
-    game_status_update();
+    update_game_status();
     fill_board();
 
 
 }
-// Setup intersections
+/* Setup intersections
             for( var id in gamedatas.intersections )
             {
                 var intersection = gamedatas.intersections[id];
@@ -174,4 +173,4 @@ function result_move(data) {
                     // This intersection is taken, it shouldn't appear as clickable anymore
                     dojo.removeClass( 'intersection_' + intersection.coord_x + '_' + intersection.coord_y, 'clickable' );
                 }
-            } 
+            } */
