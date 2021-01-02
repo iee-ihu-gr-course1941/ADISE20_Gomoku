@@ -6,13 +6,12 @@ var timer = null;
 $(function () {
 	draw_empty_board();
 	fill_board();
-	
+	update_game_status();
 
 	$('#login').click( login_to_game);
 	$('#reset').click( reset_board);
 	$('#do_move').click( do_move);
-	
-	update_game_status();
+
 });
 
 
@@ -21,7 +20,7 @@ function draw_empty_board() {
     for (var i = 1; i < 16; i++) {
         board += '<tr>';
         for (var j = 1; j < 16; j++) {
-            board += '<td class="board_square" id="square_' + i + '_' + j + '">' + i + ',' + j + '</td>';
+            board += '<td class="board_square" id="square_' + '_' + '">' + '</td>';
         }
         board += '</tr>';
     }
@@ -127,7 +126,7 @@ function update_player_info(){
 
 function do_move() {
 
-    var $move = $('#move').val();
+    var $move = $('#cmove').val();
 
     if ($move < 1 || $move > 15) {
         alert('Δώσε έγκυρη στήλη');
@@ -153,24 +152,5 @@ function result_move(data) {
 
 
 }
-/* Setup intersections
-            for( var id in gamedatas.intersections )
-            {
-                var intersection = gamedatas.intersections[id];
-
-                dojo.place( this.format_block('jstpl_intersection', {
-                    x:intersection.coord_x,
-                    y:intersection.coord_y,
-                    stone_type:(intersection.stone_color == null ? "no_stone" : 'stone_' + intersection.stone_color)
-                } ), $ ( 'gmk_background' ) );
-
-                var x_pix = this.getXPixelCoordinates(intersection.coord_x);
-                var y_pix = this.getYPixelCoordinates(intersection.coord_y);
-                
-                this.slideToObjectPos( $('intersection_'+intersection.coord_x+'_'+intersection.coord_y), $('gmk_background'), x_pix, y_pix, 10 ).play();
-
-                if (intersection.stone_color != null) {
-                    // This intersection is taken, it shouldn't appear as clickable anymore
-                    dojo.removeClass( 'intersection_' + intersection.coord_x + '_' + intersection.coord_y, 'clickable' );
-                }
-            } */
+}
+}

@@ -1,0 +1,24 @@
+﻿body{
+	background-image:url('../images/sakura.png');
+	background-repeat: no-repeat;
+	background-size:100% 100%;
+
+}
+html{
+	height:100%;
+}
+
+#title{
+  border-top: 100px #B1763A solid;
+  border-right: 60px solid transparent;
+  width: 550px;
+  opacity: 0.4;
+}
+
+#text {
+  margin-top: -130px;
+  padding-left: 50px;
+  color: white;
+  font-family: Brush Script MT, Brush Script Std;
+  font-size:100px;
+}

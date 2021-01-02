@@ -11,23 +11,23 @@
     <link rel="stylesheet" href="bootstrap/bootstrap.min.css"/>
 
     <!-- jQuery library -->
-    <script src="bootstrap/jquery.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 
     <!-- Popper JS -->
-    <script src="bootstrap/popper.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
 
     <!-- Latest compiled JavaScript -->
-    <script src="bootstrap/bootstrap.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
     
     <script src="js/gomoku.js"></script>
-    <link rel="stylesheet" href="css/gomoku.css"/>
+    <link rel="stylesheet" href="css/gomokuu.css"/>
 
 </head>
 
 <body>
    <div class="container-fluid" id="container">
-   <div class="row justify-content-center">
-       <h1>Gomoku</h1>
+   <div class="row justify-content-center" id="title">
+ 	  <div id="text">Gomoku</div>
    </div>
    <div class="row justify-content-center" id="board">
 
@@ -49,7 +49,7 @@
              <button id='gomoku_reset' class='btn btn-primary'>ΕΝΑΡΞΗ/RESET</button>
 
     </div>
-
+</div>
 
   
 </body>
