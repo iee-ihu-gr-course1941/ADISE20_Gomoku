@@ -2,12 +2,14 @@
 
 function show_users() {
 	global $mysqli;
-	$sql = 'select username,piece_color from players';
+	$sql = 'select count(*) as p from players where username is not null';
 	$st = $mysqli->prepare($sql);
 	$st->execute();
 	$res = $st->get_result();
-	header('Content-type: application/json');
-	print json_encode($res->fetch_all(MYSQLI_ASSOC), JSON_PRETTY_PRINT);
+	$players = $res->fetch_assoc()['p'];
+	return($players);
+	//header('Content-type: application/json');
+	//print json_encode($res->fetch_all(MYSQLI_ASSOC), JSON_PRETTY_PRINT);
 }
 function show_user($b) {
 	global $mysqli;
@@ -28,21 +30,35 @@ function set_user($b,$input) {
 		exit;
 	}
 	$username=$input['username'];
+	$piece_color = $input['piece_color'];
 	global $mysqli;
-	$sql = 'select count(*) as c from players where piece_color=? and username is not null';
+	$sql = 'select count(*) as c from players where username=?';
 	$st = $mysqli->prepare($sql);
-	$st->bind_param('s',$b);
+	$st->bind_param('s',$username);
 	$st->execute();
 	$res = $st->get_result();
 	$r = $res->fetch_all(MYSQLI_ASSOC);
 	if($r[0]['c']>0) {
 		header("HTTP/1.1 400 Bad Request");
-		print json_encode(['errormesg'=>"Player $b is already set. Please select another color."]);
+		print json_encode(['errormesg'=>"This username is already set. Please select another username."]);
 		exit;
 	}
+
+	$sql2 = 'select count(*) as c from players where piece_color=? and username is not null';
+    $st2 = $mysqli->prepare($sql2);
+    $st2->bind_param('s', $piece_color);
+    $st2->execute();
+    $res2 = $st2->get_result();
+    $r2 = $res2->fetch_all(MYSQLI_ASSOC);
+    if ($r2[0]['c'] > 0) {
+        header("HTTP/1.1 400 Bad Request");
+        print json_encode(['errormesg' => "This color is already in use. Please select another."]);
+        exit;
+    }
+
 	$sql = 'update players set username=?, token=md5(CONCAT( ?, NOW()))  where piece_color=?';
 	$st2 = $mysqli->prepare($sql);
-	$st2->bind_param('sss',$username,$username,$b);
+	$st2->bind_param('sss',$username,$username,$piece_color);
 	$st2->execute();
 
 

@@ -7,6 +7,7 @@ $db = 'gomoku';
 
 $user=$DB_USER;
 $pass=$DB_PASS;
+
 global $mysqli;
 
 $mysqli = new mysqli($host, $user, $pass, $db);    

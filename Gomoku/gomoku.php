@@ -3,8 +3,8 @@
 require_once "lib/dbconnect.php";
 require_once "lib/board.php";
 require_once "lib/players.php";
-require_once "lib/game_status.php";
-require_once "lib/winner.php";
+require_once "lib/game.php";
+//require_once "lib/winner.php";
 
 $method = $_SERVER['REQUEST_METHOD'];
 $request = explode('/', trim($_SERVER['PATH_INFO'],'/'));
@@ -44,10 +44,11 @@ function handle_board($method,$input) {
  
     if($method=='GET') {
         show_board($input);
-    if ($method == 'PUT') {
+        if ($method == 'PUT') {
         do_move($input);
+        }   
     }
-
+}
 
 function handle_piece($method, $x,$y,$input) {
 	if($method=='GET') {
@@ -61,4 +62,4 @@ function handle_player($method, $input)
 {
     handle_user($method, $input);
 }
-
+?>

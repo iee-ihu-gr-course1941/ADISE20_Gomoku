@@ -6,15 +6,13 @@ var timer = null;
 $(function () {
 	draw_empty_board();
 	fill_board();
-	
 
 	$('#login').click( login_to_game);
 	$('#reset').click( reset_board);
-	$('#do_move').click( do_move);
+	//$('#do_move').click( do_move);
 	update_game_status();
-	
 });
-	
+
 
 function draw_empty_board() {
     var board = '<table id="gomoku_board">';
@@ -25,16 +23,18 @@ function draw_empty_board() {
         }
         board += '</tr>';
     }
-    board += '</table>';
+    board += '</table>'
 
     $('#board').html(board);
 }
 
 
+
+
 function fill_board() {
 	$.ajax({url: "gomoku.php/board/", 
 		method: 'GET',
-        dataType: 'json',
+		dataType: 'json',
 		headers: {"X-Token": me.token},
 		success: fill_board_by_data });
 }
@@ -44,34 +44,27 @@ function fill_board_by_data(data) {
 	for(var i=0;i<data.length;i++) {
 		var z = data[i];
 		var id = '#square_'+ z.x +'_' + z.y;
-		
-		
 	}
 }
 
-	
 function reset_board() {
 	$.ajax({url: "gomoku.php/board/", 
 	headers: {"X-Token": me.token}, 
 	method: 'POST',  
 	success: fill_board_by_data });
-	$('#move_div').hide();
+	//$('#move_div').hide();
 	$('#game_initializer').show(2000);
 }	
-
-
 	
 function login_to_game() {
     if ($('#username').val() == '') {
         alert('You have to set a username!');
         return;
   }
-  var piece_color = $('#piece_color').val();
-	
-  
+
 	$.ajax({url: "gomoku.php/players/", 
 			method: 'PUT',
-			dataType: "json",
+			dataType: 'json',
 			headers: {"X-Token": me.token},
 			contentType: 'application/json',
 			data: JSON.stringify( {username: $('#username').val(), piece_color: $('#piece_color').val()}),
@@ -86,17 +79,16 @@ function login_result(data) {
 	update_game_status();
 }
 
-function login_error(data,y,z,c) {
+function login_error(data) {
 	var x = data.responseJSON;
 	alert(x.errormesg);
 }
 
 function update_game_status() {
-	
 	clearTimeout(timer);
-	$.ajax({url: "gomoku.php/status/", 
-	success: update_status,
-	headers: {"X-Token": me.token} });
+	$.ajax({url: "gomoku.php/status/",
+	headers: {"X-Token": me.token}, 
+	success: update_status});
 }
 
 function update_status(data) {
@@ -105,17 +97,15 @@ function update_status(data) {
 	game_status=data[0];
 	update_player_info();
 	clearTimeout(timer);
- 	
 }
 
 function update_player_info(){
-	$('#game_info').html("Color: "+me.piece_color+"<br> Username: " + me.username +'<br>Token='+me.token+'<br>Game state: '+game_status.status+', '+ game_status.p_turn+' must play now.');
-	
+	$('#game_info').html("Color: "+me.piece_color+"<br> Username: "+me.username +'<br>Token='+me.token+'<br>Game state: '+game_status.status+', '+ game_status.p_turn+' must play now.');
 	
 }
 
 
-function do_move() {
+/*function do_move() {
 
     var $move = $('#cmove').val();
 
@@ -135,7 +125,7 @@ function do_move() {
         error: login_error
     });
 
-}
+}*/
 
 function result_move(data) {
     update_game_status();
@@ -143,3 +133,4 @@ function result_move(data) {
 
 
 }
+
