@@ -1,4 +1,11 @@
-﻿body{
+﻿#gomoku_board TD {
+	width: 2em;
+	height:2em;
+	border:1px solid black;
+	text-align:center;
+	}
+
+body{
 	background-image:url('../images/sakura.png');
 	background-repeat: no-repeat;
 	background-size:100% 100%;

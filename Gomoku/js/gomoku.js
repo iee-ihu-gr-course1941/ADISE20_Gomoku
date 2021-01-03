@@ -6,25 +6,26 @@ var timer = null;
 $(function () {
 	draw_empty_board();
 	fill_board();
-	update_game_status();
+	
 
 	$('#login').click( login_to_game);
 	$('#reset').click( reset_board);
 	$('#do_move').click( do_move);
-
+	update_game_status();
+	
 });
-
+	
 
 function draw_empty_board() {
-    var board = '<table id="gomoku_board">'
+    var board = '<table id="gomoku_board">';
     for (var i = 1; i < 16; i++) {
         board += '<tr>';
         for (var j = 1; j < 16; j++) {
-            board += '<td class="board_square" id="square_' + '_' + '">' + '</td>';
+            board += '<td class="board_square" id="square_' + i + '_' + j + '">' + '</td>';
         }
         board += '</tr>';
     }
-    board += '</table>'
+    board += '</table>';
 
     $('#board').html(board);
 }
@@ -32,18 +33,11 @@ function draw_empty_board() {
 
 function fill_board() {
 	$.ajax({url: "gomoku.php/board/", 
+		method: 'GET',
+        dataType: 'json',
 		headers: {"X-Token": me.token},
 		success: fill_board_by_data });
 }
-
-function reset_board() {
-	$.ajax({url: "gomoku.php/board/", 
-	headers: {"X-Token": me.token}, 
-	method: 'POST',  
-	success: fill_board_by_data });
-	$('#move_div').hide();
-	$('#game_initializer').show(2000);
-	
 
 function fill_board_by_data(data) {
 	board=data;
@@ -53,14 +47,29 @@ function fill_board_by_data(data) {
 		
 		
 	}
+}
+
+	
+function reset_board() {
+	$.ajax({url: "gomoku.php/board/", 
+	headers: {"X-Token": me.token}, 
+	method: 'POST',  
+	success: fill_board_by_data });
+	$('#move_div').hide();
+	$('#game_initializer').show(2000);
+}	
+
+
 	
 function login_to_game() {
     if ($('#username').val() == '') {
         alert('You have to set a username!');
         return;
   }
+  var piece_color = $('#piece_color').val();
+	
   
-	$.ajax({url: "gomoku.php/players/"+piece_color, 
+	$.ajax({url: "gomoku.php/players/", 
 			method: 'PUT',
 			dataType: "json",
 			headers: {"X-Token": me.token},
@@ -85,40 +94,22 @@ function login_error(data,y,z,c) {
 function update_game_status() {
 	
 	clearTimeout(timer);
-	$.ajax({url: "gomoku.php/status/", success: update_status,headers: {"X-Token": me.token} });
+	$.ajax({url: "gomoku.php/status/", 
+	success: update_status,
+	headers: {"X-Token": me.token} });
 }
 
-function update_game_status(data) {
+function update_status(data) {
 	last_update=new Date().getTime();
 	var old_stats = game_status;
 	game_status=data[0];
 	update_player_info();
 	clearTimeout(timer);
-	if(game_status.p_turn==me.piece_color &&  me.piece_color!=null) {
-		x=0;
-
-	if (game_status.status == 'aborted') {
-        $('#gamepad').hide(2000);
-		timer=setTimeout(function() { update_game_status();}, 4000);
-	} else if (game_status.status == 'ended') {
-        $('#gamepad').hide(2000);
-        timer = setTimeout(function() { update_game_status(); }, 2000);
-	} else {
-        if (game_status.p_turn == me.piece_color && me.piece_color != null) {
-            $('#gamepad').show(2000);
-            timer = setTimeout(function() { update_game_status(); }, 10000);
-        } else {
-            $('#gamepad').hide(2000);
-            timer = setTimeout(function() { update_game_status(); }, 4000);
-        }
-    }	
-		
-	}
  	
 }
 
 function update_player_info(){
-	$('#game_info').html("Color: "+me.piece_color+"<br> Username: "+me.username +'<br>Token='+me.token+'<br>Game state: '+game_status.status+', '+ game_status.p_turn+' must play now.');
+	$('#game_info').html("Color: "+me.piece_color+"<br> Username: " + me.username +'<br>Token='+me.token+'<br>Game state: '+game_status.status+', '+ game_status.p_turn+' must play now.');
 	
 	
 }
@@ -151,6 +142,4 @@ function result_move(data) {
     fill_board();
 
 
-}
-}
 }
