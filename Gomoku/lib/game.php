@@ -1,5 +1,4 @@
 <?php
-
 function show_status() {
 	
 	global $mysqli;
@@ -18,14 +17,12 @@ function show_status() {
 }
 
 function check_abort() {
-	mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT);
 	global $mysqli;
 	
 	$sql = "update game_status set status='aborded', result=if(p_turn='W','B','W'),p_turn=null where p_turn is not null and last_change<(now()-INTERVAL 5 MINUTE) and status='started'";
 	$st = $mysqli->prepare($sql);
 	$r = $st->execute();
 }
-
 
 function read_status() {
 	global $mysqli;
@@ -39,8 +36,6 @@ function read_status() {
 	return($status);
 }
 
-
-//some differences with ska
 function update_game_status() {
 	global $mysqli;
 

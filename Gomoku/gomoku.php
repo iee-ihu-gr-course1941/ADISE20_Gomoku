@@ -1,10 +1,10 @@
 <?php
+ini_set('display_errors','on' );
 
-require_once "lib/dbconnect.php";
 require_once "lib/board.php";
 require_once "lib/players.php";
 require_once "lib/game.php";
-//require_once "lib/winner.php";
+require_once "lib/dbconnect.php";
 
 $method = $_SERVER['REQUEST_METHOD'];
 $request = explode('/', trim($_SERVER['PATH_INFO'],'/'));
@@ -13,31 +13,28 @@ if(isset($_SERVER['HTTP_X_TOKEN'])) {
 	$input['token']=$_SERVER['HTTP_X_TOKEN'];
 }
 
-
 switch ($r = array_shift($request)) {
     case 'board':
-        switch ($r = array_shift($request)) {
+        switch ($b = array_shift($request)) {
             case '':
-            	  handle_board($method,$input);
+            case null: handle_board($method,$input);
                   break;
-            case 'reset':
-                reset_board();
-                break;
             case 'move':
                 handle_board($method, $input);
                 break;
+            default: header("HTTP/1.1 404 Not Found");
+            break;
         }
-        break;
-	case 'players': 
-		    	handle_player($method, $input);
-        		break;        
+        break;    
     case 'status':
-       if(sizeof($request)==0) {show_status();}
-		else {header("HTTP/1.1 404 Not Found");}
-		break;  
+			if(sizeof($request)==0) {show_status();}
+			else {header("HTTP/1.1 404 Not Found");}
+			break;    
+	case 'players': 
+		handle_player($method, $request,$input);
+        break;    
 	default:
         header("HTTP/1.1 404 Not Found");
-        print json_encode(['errormsg' => "Switch problem."]);
         exit;
 }
 
@@ -45,22 +42,33 @@ function handle_board($method,$input) {
  
     if($method=='GET') {
         show_board($input);
-        if ($method == 'PUT') {
-        do_move($input);
+    }else if ($method == 'POST') {
+        reset_board();
+        show_board($input);
         }   
     }
-}
-
+    
 function handle_piece($method, $x,$y,$input) {
-	if($method=='GET') {
-        show_piece($x,$y);
-    } else if ($method=='PUT') {
-		move_piece($x,$y,$input['x'],$input['y'],$input['token']);
-    }    
+        if($method=='GET') {
+            show_piece($x,$y);
+        } else if ($method=='PUT') {
+            move_piece($x,$y,$input['x'],$input['y'],$input['token']);
+        }    
 }
 
-function handle_player($method, $input)
-{
-    handle_user($method, $input);
+function handle_player($method, $request, $input){
+    switch ($b=array_shift($request)) {
+        case '':
+        case null: if($method=='GET') {show_users($method);}
+                       else {header("HTTP/1.1 400 Bad Request"); 
+                             print json_encode(['errormesg'=>"Method $method not allowed here."]);}
+                        break;
+        case 'B': 
+        case 'W': handle_user($method, $b,$input);
+        		 break;		
+        default: header("HTTP/1.1 404 Not Found");
+				 print json_encode(['errormesg'=>"Player $b not found."]);
+                 break;
+    }
 }
 ?>
