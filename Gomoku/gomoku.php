@@ -18,7 +18,7 @@ switch ($r = array_shift($request)) {
     case 'board':
         switch ($r = array_shift($request)) {
             case '':
-			case null: handle_board($method,$input);
+            	  handle_board($method,$input);
                   break;
             case 'reset':
                 reset_board();
@@ -27,9 +27,10 @@ switch ($r = array_shift($request)) {
                 handle_board($method, $input);
                 break;
         }
-	case 'players': handle_player($method, $request,$input);
-        break;        
-        
+        break;
+	case 'players': 
+		    	handle_player($method, $input);
+        		break;        
     case 'status':
        if(sizeof($request)==0) {show_status();}
 		else {header("HTTP/1.1 404 Not Found");}

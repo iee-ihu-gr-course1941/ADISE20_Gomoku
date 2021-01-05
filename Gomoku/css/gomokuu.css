@@ -3,7 +3,50 @@
 	height:2em;
 	border:1px solid black;
 	text-align:center;
-	}
+  }
+  
+  #gomoku_board {
+    position:absolute;
+    top: 220px;
+    bottom: 100 px;
+
+  }
+ /* #board {
+    text-align: center;
+    position: relative;
+  }
+  
+  #gmk_background {
+    width: 620px;
+    height: 620px;	
+    position: relative;
+    display: inline-block;
+  }
+  
+  #gmk_pic {	
+    background-image: url( 'images/boardbg.jpg');
+    width: 620px;
+    height: 620px;
+    position: absolute;	
+  }
+*/
+#game_initializer{
+  position:absolute;
+  left: 190px;
+  bottom: 500px;
+
+}
+
+#username, #piece_color, #login{
+  margin: 5px;
+
+}
+
+#game_info{
+  position:absolute;
+  right: 190px;
+  bottom: 500px;
+}
 
 body{
 	background-image:url('../images/sakura.png');
@@ -29,3 +72,4 @@ html{
   font-family: Brush Script MT, Brush Script Std;
   font-size:100px;
 }
+

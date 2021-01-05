@@ -29,9 +29,14 @@
    <div class="row justify-content-center" id="title">
  	  <div id="text">Gomoku</div>
    </div>
-   <div class="row justify-content-center" id="board">
-
-   </div>
+   
+   <div class="row justify-content-center" id="board"></div> 
+  <!-- <div class="row justify-content-center" id="gmk_board"></div> -->
+	<!--<div id="board">
+		<div id="gmk_background">
+			<div id="gmk_pic"></div>
+		</div>	
+	</div>-->
    <br></br>
      <div class="row justify-content-center">
          <div id='game_initializer'>
@@ -43,10 +48,13 @@
                      </select>
                  <button id='login' class='btn btn-outline-danger'>ΕΙΣΟΔΟΣ</button><br></br>
                 </div>
-                <div id='game_info'>
-			    </div>
+                
             </div>
-             <button id='gomoku_reset' class='btn btn-primary'>ΕΝΑΡΞΗ/RESET</button>
+			<div id='game_info'>
+            <p>Player</p>
+            <p id='stats'></p>
+			    </div>
+             <button id='gomoku_reset' class='btn btn-primary'>RESET</button>
 
     </div>
 </div>
