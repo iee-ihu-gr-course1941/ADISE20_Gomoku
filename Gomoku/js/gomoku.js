@@ -46,25 +46,14 @@ function fill_board_by_data(data) {
 		var s = data[i];
 		var id = '#square_'+ s.x +'_' + s.y;
 		if (s.piece_color == 'B') {
-			$(id).css('background-color', 'black');
-           // $(id).css('background-image', 'url("../images/black.png")');
+			$(id).css('background-image', 'url("../images/black.png")');
+		//	$(id).css('background-color', 'black');  - checking if it works
         }
         if (s.piece_color == 'W') {
-			$(id).css('background-color', 'white');
-			//$(id).css('background-image', 'url("../images/white.png")');
+			$(id).css('background-image', 'url("../images/white.png")');
+			//$(id).css('background-color', 'white');
         }
 
-	/*	var c_x = s.x;
-		var c_y = s.y;
-		var c = s.piece_color;
-		var img = '<img id="piece '+c'" src="../images/'+c+'.png">';
-
-		if ( c =='B') {
-		#(id).css
-		}
-		if ( c =='W') {
-		
-		}*/
 	}
 }
 

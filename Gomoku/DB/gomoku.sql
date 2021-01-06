@@ -41,7 +41,18 @@ LEAVE do_move;
 END IF;
 
 END$$
+/*CREATE DEFINER=`root`@`localhost` PROCEDURE `move_piece` (`x1` INT, `y1` INT)  BEGIN
+	declare  p_color char;
+	
+	select  piece_color into p_color FROM `board` WHERE X=x1 AND Y=y1;
+	
+	update board
+	set piece_color=p_color
+	where x=x1 and y=y1;
+	
 
+	update game_status set p_turn=if(p_color='W','B','W');
+    END$$*/
 DELIMITER ;
 
 -- --------------------------------------------------------

@@ -19,15 +19,7 @@
     opacity: 0.3;
 	
 }*/
-/*#bground{
-	background-image:url('../images/board.png');	
-	width: 200px;
-	height:200px;
-	position:absolute;
-	z-index:10
-	
-}
-*/
+
 body{
 	background-image:url('../images/sakura.png');
 	background-repeat: no-repeat;

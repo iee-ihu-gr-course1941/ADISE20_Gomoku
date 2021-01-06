@@ -31,7 +31,7 @@ function show_board() {
         return($res->fetch_all(MYSQLI_ASSOC));
     }
 
-    function piece_move($input) {
+   /* function piece_move($input) {
         $token = input['token'];
         if($token==null || $token=='') {
             header("HTTP/1.1 400 Bad Request");
@@ -53,15 +53,15 @@ function show_board() {
             exit;
         }
 
-       /* if($status['p_turn']!=$player_id) {
+        if($status['p_turn']!=$player_id) {
             header("HTTP/1.1 400 Bad Request");
             print json_encode(['errormesg'=>"It is not your turn."]);
             exit;
-        }*/
-        //$row_id = $x;
-        //$col_id = $y;
+        }
+
         do_move($input);
-    }
+    }*/
+    
     function do_move($input){
         $x=$input['x'];
         $y=$input['y'];

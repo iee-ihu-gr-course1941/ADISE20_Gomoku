@@ -4,7 +4,7 @@ function show_status() {
 	global $mysqli;
 	
 	check_abort();
-	
+	//winner();
 	$sql = 'select * from game_status';
 	$st = $mysqli->prepare($sql);
 
@@ -69,7 +69,7 @@ function update_status() {
 		case 1: $new_status='initialized'; break;
 		case 2: $new_status='started'; 
 				if($status['p_turn']==null) {
-					$new_turn='B'; // It was not started before...
+					$new_turn='B'; //First player always B
 				}
 				break;
 	}
