@@ -4,8 +4,10 @@ var timer = null;
 
 $(function () {
 	draw_empty_board();
-	fill_board();
-
+	$('#colrow').hide();
+//	fill_board();
+	$('#img1').hide();
+	$('#img2').hide();
 	$('#login').click( login_to_game);
 	$('#gomoku_reset').click( reset_board);
 	$('#play').click( do_move);
@@ -39,10 +41,19 @@ function fill_board() {
 }
 
 function fill_board_by_data(data) {
-	board=data;
+//	board=data;
 	for(var i=0;i<data.length;i++) {
 		var s = data[i];
 		var id = '#square_'+ s.x +'_' + s.y;
+		if (s.piece_color == 'B') {
+			$(id).css('background-color', 'black');
+           // $(id).css('background-image', 'url("../images/black.png")');
+        }
+        if (s.piece_color == 'W') {
+			$(id).css('background-color', 'white');
+			//$(id).css('background-image', 'url("../images/white.png")');
+        }
+
 	/*	var c_x = s.x;
 		var c_y = s.y;
 		var c = s.piece_color;
@@ -63,8 +74,7 @@ function login_to_game() {
         return;
   }
 	var p_color = $('#piece_color').val();
-	//draw_empty_board(p_color);
-//	fill_board();
+
 	$.ajax({url: "gomoku.php/players/"+p_color, 
 			method: 'PUT',
 			dataType: 'json',
@@ -102,21 +112,43 @@ function update_status(data) {
 	game_status=data[0];
 	update_player_info();
 	clearTimeout(timer);
+
+	if (game_status.status == 'aborted') {
+        $('#colrow').hide(1000);
+		timer = setTimeout(function() { update_game_status(); }, 4000);
+	} else if (game_status.status == 'ended') {
+        $('#colrow').hide(1000);
+        timer = setTimeout(function() { update_game_status(); }, 2000);
+    } 	else {
+
 	if(game_status.p_turn==me.piece_color &&  me.piece_color!=null) {
+		$('#play').prop('disabled', false);
+		$('#colrow').show(1000);
 		x=0;
 		// do play
 		if(old_stats.p_turn!=game_status.p_turn) {
 			fill_board();
 		}
-		$('#move_div').show(1000);
+	//	$('#move_div').show(1000);
 		timer=setTimeout(function() {update_game_status();}, 15000);
 	} else {
+		$('#play').prop('disabled', true);
+		$('#colrow').hide(1000);
 		// must wait for something
-		$('#move_div').hide(1000);
+//		$('#move_div').hide(1000);
 		timer=setTimeout(function() { update_game_status();}, 4000);
 	}
- 	
 }
+
+	if (game_status.status == 'started' && me.piece_color == 'B'){
+		$('#img1').show(1000);
+	} else if (game_status.status == 'started' && me.piece_color == 'W'){
+		$('#img2').show(1000);
+	}
+	
+
+	}
+
 
 
 function update_player_info(){
@@ -140,13 +172,15 @@ function login_error(data) {
 function do_move() {
 //	var target = e.target;
 //	var td_id = target;
+$('#play').prop('disabled', true);
+
 	var x = $('#row_id').val();
 	var y = $('#col_id').val();
-	$.ajax({url: "game.php/board/move/", 
+	$.ajax({url: "gomoku.php/board/move/", 
 	method: 'PUT',
 	dataType: "json",
 	contentType: 'application/json',
-	data: JSON.stringify( {x: x, y: y}),
+	data: JSON.stringify( {x: x, y: y, piece_color: me.piece_color}),
 	headers: {"X-Token": me.token},
 	success: move_result,
 	error: login_error});

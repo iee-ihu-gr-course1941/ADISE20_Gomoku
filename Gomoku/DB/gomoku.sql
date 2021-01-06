@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 5.0.3
+-- version 5.0.4
 -- https://www.phpmyadmin.net/
 --
--- Φιλοξενητής: 127.0.0.1:3307
--- Χρόνος δημιουργίας: 18 Δεκ 2020 στις 20:50:20
--- Έκδοση διακομιστή: 10.4.14-MariaDB
--- Έκδοση PHP: 7.2.34
+-- Φιλοξενητής: 127.0.0.1
+-- Χρόνος δημιουργίας: 06 Ιαν 2021 στις 14:09:31
+-- Έκδοση διακομιστή: 10.4.17-MariaDB
+-- Έκδοση PHP: 7.4.13
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -26,24 +26,21 @@ DELIMITER $$
 -- Διαδικασίες
 --
 CREATE DEFINER=`root`@`localhost` PROCEDURE `clean_board` ()  BEGIN
-REPLACE INTO board SELECT * FROM board_empty;
+/*REPLACE INTO board SELECT * FROM board_empty;*/
+    UPDATE `board` SET `piece_color`=null;
+		UPDATE `players` SET `username`=null, `token`=null;
+		UPDATE `game_status` SET `status`='not active',`p_turn`=null, `result`=null;
 END$$
 
-CREATE DEFINER=`root`@`localhost` PROCEDURE `piece_move` (`x1` TINYINT, `y1` TINYINT, `x2` TINYINT, `y2` TINYINT)  BEGIN
-	declare  p_color char;
-	
-	select  piece_color into p_color FROM `board` WHERE X=x1 AND Y=y1;
-	
-	update board
-	set piece_color=p_color
-	where x=x2 and y=y2;
-	
-	UPDATE board
-	SET piece_color=null
-	WHERE X=x1 AND Y=y1;
-	
-	update game_status set p_turn=if(p_color='W','B','W');
-    END$$
+CREATE DEFINER=`root`@`localhost` PROCEDURE `move_piece` (`x1` INT, `y1` INT, `color` TEXT)  do_move:
+BEGIN
+if (SELECT piece_color FROM `board` WHERE X=x1 AND Y=y1)IS NULL THEN
+UPDATE `board` SET piece_color=color WHERE X=x1 AND Y=y1;
+UPDATE `game_status` SET p_turn=if(color='W','B','W');
+LEAVE do_move;
+END IF;
+
+END$$
 
 DELIMITER ;
 
@@ -312,7 +309,7 @@ CREATE TABLE `game_status` (
   `status` enum('not active','initialized','started','ended','aborded') NOT NULL DEFAULT 'not active',
   `p_turn` enum('B','W') DEFAULT NULL,
   `result` enum('W','B','D') DEFAULT NULL,
-  `last_change` timestamp NOT NULL DEFAULT current_timestamp()
+  `last_change` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
@@ -320,7 +317,7 @@ CREATE TABLE `game_status` (
 --
 
 INSERT INTO `game_status` (`status`, `p_turn`, `result`, `last_change`) VALUES
-('not active', NULL, NULL, '0000-00-00 00:00:00');
+('aborded', NULL, 'W', '2021-01-06 13:08:40');
 
 -- --------------------------------------------------------
 
@@ -340,8 +337,8 @@ CREATE TABLE `players` (
 --
 
 INSERT INTO `players` (`username`, `piece_color`, `token`, `last_change`) VALUES
-(NULL, 'B', NULL, '0000-00-00 00:00:00'),
-(NULL, 'W', NULL, '0000-00-00 00:00:00');
+('user', 'B', '72c5df669c42788328b4b786dbad061b', '2021-01-06 12:24:24'),
+('4541', 'W', '4333b554fb1ed51f698f6dfb04fa95b6', '2021-01-06 12:24:31');
 
 --
 -- Ευρετήρια για άχρηστους πίνακες

@@ -42,30 +42,28 @@
                 
             </div>
 			<div id='game_info'>
-			    </div>
-             <button id='gomoku_reset' class='btn btn-primary'>RESET</button>
-			 <div id="img">
-				<p id="insert_img"></p>
-			 </div>
-             Eπέλεξε γραμμή:<br>
+                </div>
+                <div id='colrow'>
+             Eπέλεξε γραμμή:
                         <select id="row_id">
-                            <option value="1">Στήλη 1</option>
-                            <option value="2">Στήλη 2</option>
-                            <option value="3">Στήλη 3</option>
-                            <option value="4">Στήλη 4</option>
-                            <option value="5">Στήλη 5</option>
-                            <option value="6">Στήλη 6</option>
-                            <option value="7">Στήλη 7</option>
-                            <option value="8">Στήλη 8</option>
-                            <option value="9">Στήλη 9</option>
-                            <option value="10">Στήλη 10</option>
-                            <option value="11">Στήλη 11</option>
-                            <option value="12">Στήλη 12</option>
-                            <option value="13">Στήλη 13</option>
-                            <option value="14">Στήλη 14</option>
-                            <option value="15">Στήλη 15</option>
+                            <option value="1">Γραμμή 1</option>
+                            <option value="2">Γραμμή 2</option>
+                            <option value="3">Γραμμή 3</option>
+                            <option value="4">Γραμμή 4</option>
+                            <option value="5">Γραμμή 5</option>
+                            <option value="6">Γραμμή 6</option>
+                            <option value="7">Γραμμή 7</option>
+                            <option value="8">Γραμμή 8</option>
+                            <option value="9">Γραμμή 9</option>
+                            <option value="10">Γραμμή 10</option>
+                            <option value="11">Γραμμή 11</option>
+                            <option value="12">Γραμμή 12</option>
+                            <option value="13">Γραμμή 13</option>
+                            <option value="14">Γραμμή 14</option>
+                            <option value="15">Γραμμή 15</option>
                         </select>
-             Eπέλεξε στήλη:<br>
+                        <br>
+            <br>Eπέλεξε στήλη:
                         <select id="col_id">
                             <option value="1">Στήλη 1</option>
                             <option value="2">Στήλη 2</option>
@@ -83,8 +81,19 @@
                             <option value="14">Στήλη 14</option>
                             <option value="15">Στήλη 15</option>
                         </select>
-                        <button id="play" class="btn btn-outline-danger">PLAY</button>
+                        <br>
+                        <br><button id="play" class="btn btn-outline-danger">PLAY</button>
+                        </div>
+             <button id='gomoku_reset' class='btn btn-primary'>RESET</button>
+             <div id="img1">
+                 <img id="Black" src="images/black_stones.png">
+             </div>
+             <div id="img2">
+             <img id="White" src="images/white_stones.png">
+             </div>
+             
     </div>
+    
 </div>
 
 </body>
