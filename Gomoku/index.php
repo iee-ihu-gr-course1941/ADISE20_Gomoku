@@ -15,14 +15,19 @@
     <link rel="stylesheet" href="css/gomoku.css"/>
 
 </head>
-
+  
 <body>
 <div class="container-fluid" id="container">
+
    <div class="row justify-content-center" id="title">
  	  <div id="text">Gomoku</div>
    </div>
-   
-<div class="row justify-content-center" id="board"></div> 
+<div class="row justify-content-center" id="bground"></div>   
+<div class="row justify-content-center" id="board">
+ 
+
+</div>
+
 <br></br>
      <div class="row justify-content-center">
          <div id='game_initializer'>
@@ -32,16 +37,56 @@
                          <option value='B'>B</option>
                          <option value='W'>W</option>
                      </select>
-                 <button id='login' class='btn btn-outline-danger'>ΕΙΣΟΔΟΣ</button><br></br>
+                 <button id='login' class='btn btn-outline-danger'>LOGIN</button><br></br>
                 </div>
                 
             </div>
 			<div id='game_info'>
 			    </div>
-             <button id='gomoku_reset' class='btn btn-primary'>ΕΝΑΡΞΗ/RESET</button>
-
+             <button id='gomoku_reset' class='btn btn-primary'>RESET</button>
+			 <div id="img">
+				<p id="insert_img"></p>
+			 </div>
+             Eπέλεξε γραμμή:<br>
+                        <select id="row_id">
+                            <option value="1">Στήλη 1</option>
+                            <option value="2">Στήλη 2</option>
+                            <option value="3">Στήλη 3</option>
+                            <option value="4">Στήλη 4</option>
+                            <option value="5">Στήλη 5</option>
+                            <option value="6">Στήλη 6</option>
+                            <option value="7">Στήλη 7</option>
+                            <option value="8">Στήλη 8</option>
+                            <option value="9">Στήλη 9</option>
+                            <option value="10">Στήλη 10</option>
+                            <option value="11">Στήλη 11</option>
+                            <option value="12">Στήλη 12</option>
+                            <option value="13">Στήλη 13</option>
+                            <option value="14">Στήλη 14</option>
+                            <option value="15">Στήλη 15</option>
+                        </select>
+             Eπέλεξε στήλη:<br>
+                        <select id="col_id">
+                            <option value="1">Στήλη 1</option>
+                            <option value="2">Στήλη 2</option>
+                            <option value="3">Στήλη 3</option>
+                            <option value="4">Στήλη 4</option>
+                            <option value="5">Στήλη 5</option>
+                            <option value="6">Στήλη 6</option>
+                            <option value="7">Στήλη 7</option>
+                            <option value="8">Στήλη 8</option>
+                            <option value="9">Στήλη 9</option>
+                            <option value="10">Στήλη 10</option>
+                            <option value="11">Στήλη 11</option>
+                            <option value="12">Στήλη 12</option>
+                            <option value="13">Στήλη 13</option>
+                            <option value="14">Στήλη 14</option>
+                            <option value="15">Στήλη 15</option>
+                        </select>
+                        <button id="play" class="btn btn-outline-danger">PLAY</button>
     </div>
 </div>
+
 </body>
 
 </html>

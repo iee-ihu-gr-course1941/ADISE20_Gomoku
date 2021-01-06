@@ -20,7 +20,7 @@ switch ($r = array_shift($request)) {
             case null: handle_board($method,$input);
                   break;
             case 'move':
-                handle_board($method, $input);
+                handle_piece($method, $request[0],$request[1],$input);
                 break;
             default: header("HTTP/1.1 404 Not Found");
             break;
@@ -49,11 +49,12 @@ function handle_board($method,$input) {
     }
     
 function handle_piece($method, $x,$y,$input) {
-        if($method=='GET') {
+        if($method=='PUT') {
             show_piece($x,$y);
-        } else if ($method=='PUT') {
-            move_piece($x,$y,$input['x'],$input['y'],$input['token']);
-        }    
+        } else 
+        {header("HTTP/1.1 400 Bad Request"); 
+        print json_encode(['errormesg'=>"Method $method not allowed here."]);
+    }    
 }
 
 function handle_player($method, $request, $input){

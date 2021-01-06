@@ -8,7 +8,7 @@ $(function () {
 
 	$('#login').click( login_to_game);
 	$('#gomoku_reset').click( reset_board);
-	//$('#do_move').click( do_move);
+	$('#play').click( do_move);
 	update_game_status();
 });
 
@@ -24,6 +24,12 @@ function draw_empty_board() {
     board += '</table>'
 
     $('#board').html(board);
+    
+  /*  for (var i = 1; i < 16; i++){
+   	 for (var j = 1; j < 16; j++) {
+        var intersection='<div class="gmk_intersection" id="intersection_${x}_${y}"></div>';
+
+    */
 }
 
 function fill_board() {
@@ -35,8 +41,19 @@ function fill_board() {
 function fill_board_by_data(data) {
 	board=data;
 	for(var i=0;i<data.length;i++) {
-		var z = data[i];
-		var id = '#square_'+ z.x +'_' + z.y;
+		var s = data[i];
+		var id = '#square_'+ s.x +'_' + s.y;
+	/*	var c_x = s.x;
+		var c_y = s.y;
+		var c = s.piece_color;
+		var img = '<img id="piece '+c'" src="../images/'+c+'.png">';
+
+		if ( c =='B') {
+		#(id).css
+		}
+		if ( c =='W') {
+		
+		}*/
 	}
 }
 
@@ -65,6 +82,11 @@ function reset_board() {
 	success: fill_board_by_data });
 	//$('#move_div').hide();
 	$('#game_initializer').show(2000);
+	$('#username').val("");
+    $('#game_info').empty();
+    me = { nickname: null, token: null, piece_color: null };
+    update_game_status();
+	
 }	
 
 function update_game_status() {
@@ -112,4 +134,26 @@ function login_result(data) {
 function login_error(data) {
 	var x = data.responseJSON;
 	alert(x.errormesg);
+}
+
+
+function do_move() {
+//	var target = e.target;
+//	var td_id = target;
+	var x = $('#row_id').val();
+	var y = $('#col_id').val();
+	$.ajax({url: "game.php/board/move/", 
+	method: 'PUT',
+	dataType: "json",
+	contentType: 'application/json',
+	data: JSON.stringify( {x: x, y: y}),
+	headers: {"X-Token": me.token},
+	success: move_result,
+	error: login_error});
+
+}
+
+function move_result(data){
+	update_game_status();
+	fill_board_by_data(data);
 }

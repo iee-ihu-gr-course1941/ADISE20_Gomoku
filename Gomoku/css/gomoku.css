@@ -8,8 +8,25 @@
 #gomoku_board {
     position:absolute;
     top: 220px;
-    bottom: 100 px;
+    bottom: 100px;
+    background-image:url('../images/board.png');
 }
+
+/*#square_1_2{
+    position: relative;
+    background-color: blue;
+    opacity: 0.3;
+	
+}*/
+/*#bground{
+	background-image:url('../images/board.png');	
+	width: 200px;
+	height:200px;
+	position:absolute;
+	z-index:10
+	
+}
+*/
 body{
 	background-image:url('../images/sakura.png');
 	background-repeat: no-repeat;
@@ -49,4 +66,10 @@ html{
   position:absolute;
   right: 190px;
   bottom: 500px;
+}
+
+#gomoku_reset{
+	  position:absolute;
+	  top:730px;
+
 }

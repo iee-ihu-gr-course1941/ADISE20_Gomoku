@@ -36,7 +36,7 @@ function read_status() {
 	return($status);
 }
 
-function update_game_status() {
+function update_status() {
 	global $mysqli;
 
 	$status = read_status();
